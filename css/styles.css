@@ -1,0 +1,451 @@
+/* ---------------------------------------------------------------------
+   Estilos — pensados para uso con una sola mano, en el celular, al sol.
+   Botones grandes (min 44px), buen contraste, sin depender solo del color
+   para distinguir presente/ausente (también hay letras P/A y ✓/✕).
+--------------------------------------------------------------------- */
+
+:root {
+  --color-bg: #f5f7f6;
+  --color-surface: #ffffff;
+  --color-text: #1c2321;
+  --color-text-muted: #5c6b67;
+  --color-primary: #175e54;
+  --color-primary-dark: #0e3f38;
+  --color-present: #1f9254;
+  --color-present-bg: #e3f6ec;
+  --color-absent: #c23b3b;
+  --color-absent-bg: #fbe8e8;
+  --color-border: #dfe6e3;
+  --color-danger: #c23b3b;
+  --radius: 12px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #12181a ;
+    --color-surface: #1c2426;
+    --color-text: #eef2f1;
+    --color-text-muted: #a7b3b0;
+    --color-primary: #3fae8f;
+    --color-primary-dark: #2c8570;
+    --color-present: #4cc987;
+    --color-present-bg: #103322;
+    --color-absent: #f08787;
+    --color-absent-bg: #3a1414;
+    --color-border: #2c3638;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body { min-height: 100vh; }
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Topbar ---------------------------------------------------------------- */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-primary);
+  color: #fff;
+  padding: calc(10px + var(--safe-top)) 8px 10px;
+  min-height: 44px;
+}
+.topbar-left, .topbar-right { flex: 0 0 44px; display: flex; }
+.topbar-right { justify-content: flex-end; }
+.topbar-title {
+  flex: 1;
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.icon-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.4rem;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.icon-btn:active { background: rgba(255,255,255,0.15); }
+
+/* Layout general ---------------------------------------------------------*/
+
+.screen {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 16px 16px calc(32px + var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.loading, .empty-state, .hint-text {
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: 8px 4px;
+}
+.hint-text { font-size: 0.9rem; text-align: left; }
+
+/* Botones ----------------------------------------------------------------*/
+
+.btn {
+  min-height: 48px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0 16px;
+  cursor: pointer;
+  flex: 1;
+}
+.btn:active { background: var(--color-primary-dark); }
+.btn:disabled { opacity: 0.6; }
+
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+}
+
+.btn-danger-outline {
+  background: var(--color-surface);
+  color: var(--color-danger);
+  border: 1.5px solid var(--color-danger);
+  min-height: 48px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-weight: 600;
+  text-align: left;
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+.action-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Grupos (home) ------------------------------------------------------------*/
+
+.section-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin: 4px 0 0;
+}
+
+.group-list { display: flex; flex-direction: column; gap: 10px; }
+
+.group-card {
+  text-align: left;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 14px;
+  cursor: pointer;
+  min-height: 60px;
+}
+.group-card-name { font-weight: 700; font-size: 1.05rem; }
+.group-card-sub { color: var(--color-text-muted); font-size: 0.88rem; margin-top: 2px; }
+
+.add-group-details summary {
+  cursor: pointer;
+  color: var(--color-primary);
+  font-weight: 600;
+  padding: 8px 0;
+}
+.inline-form { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.inline-form input, .inline-form select {
+  flex: 1;
+  min-height: 44px;
+  padding: 0 10px;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+/* Buscador y lista de alumnos ----------------------------------------------*/
+
+.search-input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.student-list { display: flex; flex-direction: column; gap: 8px; }
+
+.student-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  min-height: 56px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+.student-row-attendance { justify-content: space-between; padding-right: 8px; }
+.student-row-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: none;
+  border: none;
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.student-row-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.avatar {
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-border);
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.avatar-fallback { background: var(--color-primary); color: #fff; font-weight: 700; }
+
+/* Asistencia (P / A) --------------------------------------------------------*/
+
+.toggle-group { display: flex; gap: 6px; flex-shrink: 0; }
+.toggle-btn {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.toggle-present.active { background: var(--color-present-bg); border-color: var(--color-present); color: var(--color-present); }
+.toggle-absent.active { background: var(--color-absent-bg); border-color: var(--color-absent); color: var(--color-absent); }
+.toggle-btn:disabled { opacity: 0.5; }
+
+.date-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 4px 8px;
+}
+.date-nav-label { font-weight: 700; text-transform: capitalize; text-align: center; flex: 1; }
+.date-nav .icon-btn { color: var(--color-primary); }
+
+.attendance-summary {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+.summary-present { color: var(--color-present); }
+.summary-absent { color: var(--color-absent); }
+.summary-unmarked { color: var(--color-text-muted); }
+
+/* Calendario ----------------------------------------------------------------*/
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.calendar-weekdays { margin-bottom: -4px; }
+.calendar-weekday {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  padding: 4px 0;
+}
+.calendar-day {
+  aspect-ratio: 1;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  font-weight: 600;
+  min-height: 40px;
+}
+.calendar-day-empty { visibility: hidden; }
+.calendar-day-today { border-color: var(--color-primary); border-width: 2px; }
+.calendar-day-has-data { background: var(--color-present-bg); }
+.calendar-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--color-present);
+}
+
+/* Formularios ----------------------------------------------------------------*/
+
+.form-stack { display: flex; flex-direction: column; gap: 10px; }
+.field-label { display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem; color: var(--color-text-muted); font-weight: 600; }
+.field-label input, .field-label select, .field-label textarea {
+  min-height: 46px;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding: 8px 12px;
+  color: var(--color-text);
+  font-weight: 400;
+}
+textarea { border-radius: var(--radius); border: 1px solid var(--color-border); background: var(--color-surface); padding: 10px 12px; resize: vertical; }
+
+.photo-preview {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+.photo-preview img { width: 100%; height: 100%; object-fit: cover; }
+.photo-preview-empty { color: var(--color-text-muted); font-size: 0.85rem; text-align: center; padding: 8px; }
+
+/* Perfil de alumno -----------------------------------------------------------*/
+
+.profile-header { display: flex; align-items: center; gap: 16px; }
+.profile-name { font-size: 1.3rem; font-weight: 700; }
+.profile-group { color: var(--color-text-muted); }
+
+.history-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.history-list li {
+  display: flex;
+  justify-content: space-between;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.notes-list { display: flex; flex-direction: column; gap: 8px; }
+.note-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+}
+.note-card-header { display: flex; justify-content: space-between; align-items: center; }
+.note-date { font-size: 0.8rem; color: var(--color-text-muted); font-weight: 700; }
+.note-text { margin-top: 4px; white-space: pre-wrap; word-break: break-word; }
+
+.danger-zone { border-top: 1px solid var(--color-border); padding-top: 14px; margin-top: 8px; }
+
+/* Ajustes --------------------------------------------------------------------*/
+
+.settings-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.storage-bar {
+  width: 100%;
+  height: 10px;
+  border-radius: 6px;
+  background: var(--color-border);
+  overflow: hidden;
+}
+.storage-bar-fill { height: 100%; background: var(--color-primary); }
+
+/* Toasts -----------------------------------------------------------------*/
+
+.toast-container {
+  position: fixed;
+  left: 0; right: 0;
+  bottom: calc(16px + var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  z-index: 100;
+}
+.toast {
+  max-width: 90vw;
+  background: #1c2321;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s, transform 0.2s;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast-error { background: var(--color-absent); }
+.toast-success { background: var(--color-present); }
+
+/* Pantallas anchas (tablet/desktop) --------------------------------------*/
+@media (min-width: 480px) {
+  .calendar-day { min-height: 48px; }
+}
